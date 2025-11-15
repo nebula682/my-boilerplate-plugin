@@ -1,3 +1,5 @@
+// test change to verify deployment
+
 <?php
 /*
 Plugin Name: My Boilerplate Plugin
