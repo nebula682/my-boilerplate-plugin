@@ -1,0 +1,28 @@
+name: Deploy My Boilerplate Plugin to Sandbox
+
+# Trigger on push to main branch or on tags
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'  # optional, only deploy on version tags
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout your repo
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 2: Deploy via FTP to your sandbox site
+      - name: Deploy Plugin via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4
+        with:
+          server: ${{ secrets.SANDBOX_HOST }}
+          username: ${{ secrets.SANDBOX_USER }}
+          password: ${{ secrets.SANDBOX_PASS }}
+          local-dir: ./my-boilerplate-plugin
+          server-dir: /public_html/wp-content/plugins/my-boilerplate-plugin
+          git-ftp-args: --insecure  # optional, helps with some FTP servers
