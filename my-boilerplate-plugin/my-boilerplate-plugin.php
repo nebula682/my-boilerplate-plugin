@@ -82,3 +82,37 @@ function mbp_enqueue_admin_assets( $hook_suffix ) {
 }
 add_action( 'admin_enqueue_scripts', 'mbp_enqueue_admin_assets' );
 
+
+// Send Gravity Form submissions to an external webhook (Form ID = 1)
+add_action('gform_after_submission_1', 'send_gravityform_to_webhook', 10, 2);
+
+function send_gravityform_to_webhook($entry, $form) {
+
+    // Collect all form fields dynamically
+    $data = array();
+    foreach ($form['fields'] as $field) {
+        $data[sanitize_key($field->label)] = rgar($entry, $field->id);
+    }
+
+    // Convert data to JSON
+    $body = wp_json_encode($data);
+
+    // Replace with your Webhook.site URL
+    $webhook_url = 'https://webhook.site/1bffe182-5d6d-4eed-bd32-e42c55f8d137';
+
+    // Send POST request
+    $response = wp_remote_post($webhook_url, array(
+            'method'      => 'POST',
+            'headers'     => array('Content-Type' => 'application/json; charset=utf-8'),
+            'body'        => $body,
+            'timeout'     => 15,
+            'data_format' => 'body',
+    ));
+
+    // Optional: log response for debugging
+    if (is_wp_error($response)) {
+        error_log('Webhook error: ' . $response->get_error_message());
+    } else {
+        error_log('Webhook sent successfully.');
+    }
+}
