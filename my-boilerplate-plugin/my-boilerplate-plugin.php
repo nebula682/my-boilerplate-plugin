@@ -1,14 +1,15 @@
 <?php
 /*
 Plugin Name: My Boilerplate Plugin
-Plugin URI:  https://example.com/
+Plugin URI:
 Description: Boilerplate plugin that shows how to enqueue scripts and styles on frontend and admin, with a simple settings page.
 Version:     0.1.1
 Author:      Malcolm
-Author URI:  https://example.com/
+Author URI:
 Text Domain: my-boilerplate-plugin
 Domain Path: /languages
 */
+// my boilerplate
 
 if ( ! defined( 'WPINC' ) ) {
     die;
