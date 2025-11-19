@@ -9,7 +9,7 @@ Author URI:
 Text Domain: my-boilerplate-plugin
 Domain Path: /languages
 */
-// my boilerplate
+//my initial boiler plate malcolm
 
 if ( ! defined( 'WPINC' ) ) {
     die;
